@@ -44,9 +44,19 @@ class Post(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
-    category = db.relationship("PostCategory", back_populates="post")
+    categories = db.relationship("PostCategory", back_populates="post")
     owner = db.relationship("User", uselist=False, back_populates="posts")
+    comments = db.relationship("Comment", back_populates="post")
 
     def __repr__(self):
         return f"Post({self.id}, {self.title})"
 
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    commenter = db.Column(db.String(80), nullable=False)
+    comment = db.Column(db.Text, nullable=False)
+
+    post_id = db.Column(db.Integer, db.ForeignKey("post_id"), nullable=False)
+
+    post = db.relationship("Post", uselist=False, back_populates="comments")
