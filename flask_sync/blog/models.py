@@ -8,7 +8,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
 
-    posts = db.relationship("Post", back_populates="user")
+    posts = db.relationship("Post", back_populates="owner")
 
     def __repr__(self):
         return f"User(id={self.id}, username={self.username}, email={self.email})"
@@ -57,6 +57,6 @@ class Comment(db.Model):
     commenter = db.Column(db.String(80), nullable=False)
     comment = db.Column(db.Text, nullable=False)
 
-    post_id = db.Column(db.Integer, db.ForeignKey("post_id"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
 
     post = db.relationship("Post", uselist=False, back_populates="comments")

@@ -130,3 +130,6 @@ dmypy.json
 
 # vscode directory
 .vscode/
+
+# ignore dev sqlite db
+dev.db
