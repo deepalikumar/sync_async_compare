@@ -31,7 +31,7 @@ def setup_error_handlers(app):
 
 
 def setup_commands(app):
-    from .commands import data_cli
+    from commands import data_cli
 
     app.cli.add_command(data_cli)
 
