@@ -1,1 +1,1 @@
-from .views import blog
+from .views import blog, register_docs

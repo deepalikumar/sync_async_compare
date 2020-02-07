@@ -20,3 +20,6 @@ blog.add_url_rule(
     "/users/<int:user_id>/posts/", view_func=UserResource.as_view("users_list")
 )
 
+
+def register_docs(docs):
+    docs.register(UserResource, endpoint="blog.users_list")
