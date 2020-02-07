@@ -1,5 +1,8 @@
+import sys
+
+sys.path.append(".")
 import pytest
-from .app import create_app, db
+from app import create_app, db
 
 
 @pytest.fixture(scope="session")

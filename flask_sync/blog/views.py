@@ -17,7 +17,7 @@ class UserResource(MethodResource):
 
 
 blog.add_url_rule(
-    "/users/<int:user_id>/posts/", view_func=UserResource.as_view("users_list")
+    "/users/<int:user_id>/posts", view_func=UserResource.as_view("users_list")
 )
 
 
