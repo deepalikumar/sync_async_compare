@@ -1,9 +1,10 @@
+import sys
+
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_apispec import FlaskApiSpec
 
-import settings
 
 db = SQLAlchemy()
 docs = None
@@ -17,10 +18,10 @@ def setup_extensions(app):
 
 
 def setup_blueprints(app):
-    from .blog import blog, register_docs
+    import blog.views
 
-    app.register_blueprint(blog, url_prefix="/api/v1")
-    register_docs(docs)
+    app.register_blueprint(blog.views.blueprint, url_prefix="/api/v1")
+    blog.views.register_docs(docs)
 
 
 def setup_error_handlers(app):
@@ -50,7 +51,8 @@ def _handle_exception(exception):
 
 def create_app(override_settings=None):
     app = Flask(__name__)
-    app.config.from_object(settings)
+    sys.path.append(".")
+    app.config.from_object("settings")
     if override_settings:
         app.config.update(**override_settings)
 

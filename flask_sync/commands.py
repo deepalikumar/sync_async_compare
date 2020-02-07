@@ -2,8 +2,8 @@ import click
 from flask.cli import AppGroup
 from faker import Faker
 
-from .app import db
-from .blog import User, Post, Comment, Category
+from app import db
+from blog.models import User, Post, Comment, Category
 
 
 data_cli = AppGroup("data")
