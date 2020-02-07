@@ -18,8 +18,8 @@ class PostCategory(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"), primary_key=True)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), primary_key=True)
 
-    post = db.relationship("Post", back_populates="categories")
-    category = db.relationship("Category", back_populates="posts")
+    post = db.relationship("Post", back_populates="post_categories")
+    category = db.relationship("Category", back_populates="post_categories")
 
     def __repr__(self):
         return f"PostCategory(post_id={self.post_id}, category_id={self.category_id})"
@@ -29,7 +29,10 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
 
-    posts = db.relationship("PostCategory", back_populates="category")
+    post_categories = db.relationship("PostCategory", back_populates="category")
+    posts = db.relationship(
+        "Post", secondary=PostCategory.__table__, back_populates="categories"
+    )
 
     def __repr__(self):
         return f"Category(id={self.id}, name={self.name})"
@@ -41,10 +44,12 @@ class Post(db.Model):
     body = db.Column(db.Text, nullable=False)
     pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
-    categories = db.relationship("PostCategory", back_populates="post")
+    post_categories = db.relationship("PostCategory", back_populates="post")
+    categories = db.relationship(
+        "Category", secondary=PostCategory.__table__, back_populates="posts"
+    )
     owner = db.relationship("User", uselist=False, back_populates="posts")
     comments = db.relationship("Comment", back_populates="post")
 
