@@ -1,9 +1,2 @@
--r requirements.txt
-
-ipython
-flask-shell-ipython
-pylint
-black
-flake8
-pytest
-faker
+-r flask_sync/local_requirements.txt
+-r starlette_async/local_requirements.txt

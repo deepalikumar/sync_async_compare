@@ -1,9 +1,2 @@
-# Flask dependencies
-flask~=1.1.1
-flask-sqlalchemy~=2.4.1
-flask-migrate~=2.5.2
-flask-apispec~=0.8.5
-python-dotenv~=0.10.5
-gunicorn~=20.0.4
-psycopg2-binary~=2.8.4
-faker~=4.0.0
+-r flask_sync/requirements.txt
+-r starlette_async/requirements.txt

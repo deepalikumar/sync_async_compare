@@ -1,0 +1,9 @@
+-r requirements.txt
+
+ipython
+flask-shell-ipython
+pylint
+black
+flake8
+pytest
+faker
