@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import Table, Column, Integer, String, ForeignKey, Text, DateTime
-from app import metadata
+from resources import metadata
 
 
 User = Table(

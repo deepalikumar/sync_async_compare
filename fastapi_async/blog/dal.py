@@ -7,7 +7,7 @@ from .tables import Post, User, Comment, Category, PostCategory
 
 
 async def get_user_posts(user_id, *, category_id=None, limit=10, offset=0):
-    from app import database
+    from resources import database
 
     limit = limit if 1 <= limit <= 50 else 10
     offset = offset if offset >= 0 else 0

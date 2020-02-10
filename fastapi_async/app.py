@@ -1,13 +1,24 @@
 from fastapi import FastAPI
-import sqlalchemy
-import databases
+import uvicorn
+
+import settings
+from resources import database
+import blog.views
 
 
-app = None
-database = None
-metadata = sqlalchemy.MetaData()
+app = FastAPI(debug=settings.DEBUG)
+app.include_router(blog.views.router, prefix="/api/v1")
 
 
-def create_app():
-    global app
-    app = FastAPI()
+@app.on_event("startup")
+async def on_startup():
+    await database.connect()
+
+
+@app.on_event("shutdown")
+async def on_shutdown():
+    await database.disconnect()
+
+
+if __name__ == "__main__":
+    uvicorn.run("app:app", reload=True)
