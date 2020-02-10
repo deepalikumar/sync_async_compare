@@ -7,16 +7,20 @@ from starlette.applications import Starlette
 from starlette.responses import UJSONResponse
 from starlette.exceptions import HTTPException
 from starlette.routing import Mount
+from spectree import SpecTree
 
 import settings
 
 app = None
 database = None
 metadata = sqlalchemy.MetaData()
+api = SpecTree("starlette")
 
 
 def setup_routes():
-    import blog.views
+    from blog.views import UserPostListEndpoint
+
+    app.add_route("/api/v1/users/{user_id:int}/posts", UserPostListEndpoint)
 
 
 async def on_startup():
@@ -45,7 +49,5 @@ def create_app():
         on_shutdown=[database.disconnect],
         exception_handlers={HTTPException: http_exception},
     )
+    setup_routes()
     return app
-
-
-create_app()
