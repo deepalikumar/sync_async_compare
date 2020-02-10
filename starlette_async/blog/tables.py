@@ -4,7 +4,7 @@ from sqlalchemy import Table, Column, Integer, String, ForeignKey, Text, DateTim
 from app import metadata
 
 
-user = Table(
+User = Table(
     "user",
     metadata,
     Column("id", Integer, primary_key=True),
@@ -13,7 +13,7 @@ user = Table(
 )
 
 
-category = Table(
+Category = Table(
     "category",
     metadata,
     Column("id", Integer, primary_key=True),
@@ -21,7 +21,7 @@ category = Table(
 )
 
 
-post = Table(
+Post = Table(
     "post",
     metadata,
     Column("id", Integer, primary_key=True),
@@ -34,7 +34,7 @@ post = Table(
 )
 
 
-post_category = Table(
+PostCategory = Table(
     "post_category",
     metadata,
     Column(
@@ -49,7 +49,7 @@ post_category = Table(
 )
 
 
-comment = Table(
+Comment = Table(
     "comment",
     metadata,
     Column("id", Integer, primary_key=True),
