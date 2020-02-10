@@ -32,18 +32,6 @@ def setup_routes():
     return routes
 
 
-async def on_startup():
-    await database.connect()
-
-
-async def on_shutdown():
-    await database.disconnect()
-
-
-async def http_exception(request, exc):
-    return UJSONResponse({"errors": [exc.detail]}, status_code=exc.status_code)
-
-
 def create_app():
     sys.path.append(".")
     global app, database
@@ -52,11 +40,14 @@ def create_app():
     else:
         database = databases.Database(settings.DATABASE_URL)
 
-    app = Starlette(
-        debug=settings.DEBUG,
-        routes=setup_routes(),
-        on_startup=[database.connect],
-        on_shutdown=[database.disconnect],
-        exception_handlers={HTTPException: http_exception,},
-    )
+    app = Starlette(debug=settings.DEBUG, routes=setup_routes(),)
+
+    @app.on_event("startup")
+    async def on_startup():
+        await database.connect()
+
+    @app.on_event("shutdown")
+    async def on_shutdown():
+        await database.disconnect()
+
     return app
