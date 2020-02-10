@@ -25,3 +25,7 @@ class PostSchema(BaseModel):
     body: str
     comments: List[CommentSchema] = []
     categories: List[CategorySchema]
+
+
+class PostListSchema(BaseModel):
+    __root__: List[PostSchema]
