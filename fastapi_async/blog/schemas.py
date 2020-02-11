@@ -9,10 +9,16 @@ class User(BaseModel):
     username: str
     email: str
 
+    class Config:
+        orm_mode = True
+
 
 class Category(BaseModel):
     id: int
     name: str
+
+    class Config:
+        orm_mode = True
 
 
 class Comment(BaseModel):
@@ -20,6 +26,9 @@ class Comment(BaseModel):
     commenter: str
     comment: str
     post_id: Optional[str]
+
+    class Config:
+        orm_mode = True
 
 
 class Post(BaseModel):
@@ -30,3 +39,6 @@ class Post(BaseModel):
     owner: User
     comments: List[Comment] = []
     categories: List[Category]
+
+    class Config:
+        orm_mode = True

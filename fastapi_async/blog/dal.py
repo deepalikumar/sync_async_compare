@@ -2,8 +2,10 @@ import asyncio
 from itertools import groupby
 
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from .tables import Post, User, Comment, Category, PostCategory
+from .models import Post as PostModel
 
 
 async def get_user_posts(user_id, *, category_id=None, limit=10, offset=0):
@@ -53,3 +55,19 @@ async def get_user_posts(user_id, *, category_id=None, limit=10, offset=0):
         results.append(res)
 
     return results
+
+
+def get_user_posts_sync(session, user_id, *, category_id=None, limit=10, offset=0):
+    user_posts = session.query(PostModel).filter(PostModel.owner_id == user_id)
+    if category_id:
+        user_posts = user_posts.filter(PostModel.category_id == category_id)
+    limit = limit if 1 <= limit <= 50 else 10
+    offset = offset if offset >= 0 else 0
+    return (
+        user_posts.options(selectinload(PostModel.comments))
+        .options(selectinload(PostModel.owner))
+        .options(selectinload(PostModel.categories))
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
