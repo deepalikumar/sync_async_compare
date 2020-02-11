@@ -6,18 +6,18 @@ from resources import database
 import blog.views
 
 
-app = FastAPI(debug=settings.DEBUG)
-app.include_router(blog.views.router, prefix="/api/v1")
-
-
-@app.on_event("startup")
 async def on_startup():
     await database.connect()
 
 
-@app.on_event("shutdown")
 async def on_shutdown():
     await database.disconnect()
+
+
+app = FastAPI(debug=settings.DEBUG)
+app.include_router(blog.views.router, prefix="/api/v1")
+app.add_event_handler("startup", on_startup)
+app.add_event_handler("shutdown", on_shutdown)
 
 
 if __name__ == "__main__":
