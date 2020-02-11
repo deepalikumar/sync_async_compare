@@ -4,41 +4,52 @@ from typing import Optional, List
 from pydantic import BaseModel
 
 
-class User(BaseModel):
+class UserSchema(BaseModel):
     id: int
     username: str
     email: str
 
+
+class UserORMSchema(UserSchema):
     class Config:
         orm_mode = True
 
 
-class Category(BaseModel):
+class CategorySchema(BaseModel):
     id: int
     name: str
 
+
+class CategoryORMSchema(CategorySchema):
     class Config:
         orm_mode = True
 
 
-class Comment(BaseModel):
+class CommentSchema(BaseModel):
     id: int
     commenter: str
     comment: str
-    post_id: Optional[str]
 
+
+class CommentORMSchema(CommentSchema):
     class Config:
         orm_mode = True
 
 
-class Post(BaseModel):
+class PostSchema(BaseModel):
     id: int
     title: str
     body: str
     pub_date: datetime
-    owner: User
-    comments: List[Comment] = []
-    categories: List[Category]
+    owner: UserSchema
+    comments: List[CommentSchema] = []
+    categories: List[CategorySchema]
+
+
+class PostORMSchema(PostSchema):
+    owner = UserORMSchema
+    comments: List[CommentORMSchema] = []
+    categories: List[CategorySchema]
 
     class Config:
         orm_mode = True
