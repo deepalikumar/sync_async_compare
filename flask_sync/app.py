@@ -20,7 +20,7 @@ def setup_extensions(app):
 def setup_blueprints(app):
     import blog.views
 
-    app.register_blueprint(blog.views.blueprint, url_prefix="/api/v1")
+    app.register_blueprint(blog.views.blueprint, url_prefix="/flask/api/v1")
     blog.views.register_docs(docs)
 
 

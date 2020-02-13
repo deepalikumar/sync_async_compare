@@ -20,7 +20,7 @@ def setup_routes():
 
     routes = [
         Mount(
-            "/api/v1",
+            "/starlette/api/v1",
             name="v1",
             routes=[
                 Route(

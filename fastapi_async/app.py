@@ -15,7 +15,7 @@ async def on_shutdown():
 
 
 app = FastAPI(debug=settings.DEBUG)
-app.include_router(blog.views.router, prefix="/api/v1")
+app.include_router(blog.views.router, prefix="/fastapi/api/v1")
 app.add_event_handler("startup", on_startup)
 app.add_event_handler("shutdown", on_shutdown)
 
