@@ -1,0 +1,9 @@
+dispatch:
+    - url: "*/flask/*"
+      service: default
+
+    - url: "*/starlette/*"
+      service: starlette
+
+    - url: "*/fastapi/*"
+      service: fastapi
