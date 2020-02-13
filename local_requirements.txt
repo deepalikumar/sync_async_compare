@@ -1,2 +1,0 @@
--r flask_sync/local_requirements.txt
--r starlette_async/local_requirements.txt

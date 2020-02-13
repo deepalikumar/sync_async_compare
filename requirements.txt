@@ -1,3 +1,0 @@
--r flask_sync/requirements.txt
--r starlette_async/requirements.txt
--r fastapi_async/requirements.txt
